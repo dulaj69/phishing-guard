@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# Trained models (big files, can be re-created)
+models/
+
+# PRIVACY: real or donated messages must NEVER be committed
+data/raw/
+data/real/
+data/processed/
