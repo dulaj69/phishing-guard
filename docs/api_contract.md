@@ -1,39 +1,23 @@
-# API contract (all three members use this)
+# API contract
 
-Base address while developing: `http://127.0.0.1:8000`
+The full data format is now in `shared/contract.md`, with real examples in `shared/examples/`.
 
-## POST /predict
-Send one message, get one result.
+| Endpoint | Owner | What it does |
+|---|---|---|
+| `POST /detect` | Sanmith | Text in, label + scam score + language + scam anatomy out |
+| `POST /predict_batch` | Sanmith | Many texts at once (for LIME/SHAP) |
+| `POST /verify` | Perera | Detection + fact checks + explanation + risk tier |
+| `POST /analyze` | All | Full pipeline: detect, verify, then the warning |
+| `GET /scenarios` | Rathnayake | Study messages (answers hidden) |
+| `POST /decision` | Rathnayake | Log one participant decision, returns their reliance profile |
+| `GET /profile/{user_id}` | Rathnayake | Reliance profile (over/under-reliance, RAIR, RSR, intervention) |
 
-Request:
-```json
-{ "text": "Your account will be blocked. Call 07XXXXXXXX now." }
-```
+Try them all at http://127.0.0.1:8000/docs while the server runs.
 
-Response:
-```json
-{
-  "label": "phishing",
-  "probabilities": { "legit": 0.05, "suspicious": 0.15, "phishing": 0.80 },
-  "model_version": "baseline-tfidf-lr-0.1",
-  "latency_ms": 3.2
-}
-```
+## Study/research upgrade (2026-10-18)
 
-## POST /predict_batch
-Send many messages (needed by LIME / SHAP).
+`POST /analyze` adds `study_mode` (default false), `initial_choice` (safe/scam), `condition` (static/user_only/evidence_aware; default evidence_aware), and `session` (positive integer; default 1). Study mode requires user_id, scenario_id, initial_choice, and the exact server scenario text and sender. Demo requests never activate planted errors. No study trial is created in demo mode.
 
-Request: `{ "texts": ["message 1", "message 2"] }`
-Response: `{ "results": [ {...}, {...} ] }` (same fields as /predict)
+A study response contains an opaque `analysis_id`. Send it with user_id, final_choice, action and seconds to `/decision`; legacy message_id and ai_advice remain required for compatibility but are not trusted for attribution. The server takes truth, initial choice, advice, intervention, condition and session from its trial record. Client `truth` cannot override it. Duplicate, expired (>2 hours) or wrong-user tokens return 409; missing analysis_id returns 422. Trials and decisions are recorded atomically without SMS text. This is a local research prototype, not an authenticated multi-user service.
 
-## GET /health  ->  `{ "status": "ok" }`
-## GET /version ->  `{ "model_version": "..." }`
-
-## Rules
-- We may ADD new fields later (for example `language`, `tactics`). We never remove or rename a field without telling everyone.
-- The API never stores or logs message text.
-- Labels are always exactly: `legit`, `suspicious`, `phishing`.
-
-## Planned fields (not built yet)
-- `language`: en / si / singlish
-- `tactics`: list of cue tags such as `URGENCY`, `CREDENTIAL_REQUEST`
+`ai_advice` now also supports `uncertain`; check `verification.risk.abstain` before using its tier. Abstention is not a fourth ground-truth label. UI action buttons simulate decisions and do not place calls or open links. Export still uses `warn.reliance.export_csv`.

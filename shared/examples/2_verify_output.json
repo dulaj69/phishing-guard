@@ -1,0 +1,60 @@
+{
+  "fact_checks": [
+    {
+      "check": "official_number",
+      "result": "fail",
+      "value": "0771234567",
+      "detail": "0771234567 is NOT an official Orion Bank number.",
+      "source": {
+        "url": "https://orionbank.example/contact",
+        "checked": "2026-10-17"
+      }
+    }
+  ],
+  "explanation": [
+    {
+      "word": "karanna",
+      "weight": 0.0161
+    },
+    {
+      "word": "account",
+      "weight": 0.0155
+    },
+    {
+      "word": "block",
+      "weight": 0.01
+    },
+    {
+      "word": "call",
+      "weight": 0.0068
+    },
+    {
+      "word": "ta",
+      "weight": 0.0008
+    },
+    {
+      "word": "Orion",
+      "weight": 0.0006
+    }
+  ],
+  "risk": {
+    "tier": "Critical",
+    "likelihood": "High",
+    "harm": 2,
+    "matrix_tier": "High",
+    "adjustment": "up",
+    "reasons": [
+      "99% likely to be a scam (model)",
+      "The message asks you to call a number",
+      "0771234567 is NOT an official Orion Bank number."
+    ]
+  },
+  "official_contact": {
+    "bank": "Orion Bank",
+    "number": "0112000100",
+    "source": {
+      "url": "https://orionbank.example/contact",
+      "checked": "2026-10-17"
+    }
+  }
+}

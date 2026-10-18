@@ -1,0 +1,150 @@
+{
+  "_readme": "Bank Fact Registry. Perera fills this from OFFICIAL bank websites only. Every fact needs a source URL and the date it was checked. The two banks below are FICTIONAL demo banks that match the seed dataset. Add real Sri Lankan banks as new entries (copy the template at the bottom, then delete the template). Real entries require fact_sources for each individual field or rule. Missing entries are unknown unless coverage for that field is explicitly complete. Fictional entries cannot supply safe contact buttons.",
+  "version": "0.1-demo",
+  "banks": [
+    {
+      "id": "orion",
+      "name": "Orion Bank",
+      "fictional": true,
+      "aliases": [
+        "orion bank",
+        "orionbank",
+        "orion"
+      ],
+      "aliases_si": [
+        "ඔරියන් බැංකුව"
+      ],
+      "official_numbers": [
+        "0112000100",
+        "0112000101"
+      ],
+      "short_codes": [
+        "4455"
+      ],
+      "sender_ids": [
+        "ORIONBANK",
+        "ORION"
+      ],
+      "official_domains": [
+        "orionbank.example"
+      ],
+      "rules": {
+        "never_asks_otp": true,
+        "never_asks_pin": true,
+        "never_asks_card_details": true,
+        "never_asks_to_install_apps": true
+      },
+      "sources": [
+        {
+          "url": "https://orionbank.example/contact",
+          "checked": "2026-10-17"
+        }
+      ]
+    },
+    {
+      "id": "demo",
+      "name": "Demo Bank",
+      "fictional": true,
+      "aliases": [
+        "demo bank",
+        "demobank"
+      ],
+      "aliases_si": [
+        "ඩෙමෝ බැංකුව"
+      ],
+      "official_numbers": [
+        "0112000000",
+        "0113000000"
+      ],
+      "short_codes": [
+        "2255"
+      ],
+      "sender_ids": [
+        "DEMOBANK"
+      ],
+      "official_domains": [
+        "demobank.example"
+      ],
+      "rules": {
+        "never_asks_otp": true,
+        "never_asks_pin": true,
+        "never_asks_card_details": true,
+        "never_asks_to_install_apps": true
+      },
+      "sources": [
+        {
+          "url": "https://demobank.example/security",
+          "checked": "2026-10-17"
+        }
+      ]
+    }
+  ],
+  "_template": {
+    "id": "short-id",
+    "name": "Full Bank Name",
+    "fictional": false,
+    "aliases": [
+      "lowercase names people use in SMS"
+    ],
+    "aliases_si": [
+      "Sinhala name"
+    ],
+    "official_numbers": [
+      "hotline digits only, e.g. 0112345678"
+    ],
+    "short_codes": [],
+    "sender_ids": [
+      "SMS sender name exactly as it appears on phones"
+    ],
+    "official_domains": [
+      "bankname.lk"
+    ],
+    "rules": {
+      "never_asks_otp": true,
+      "never_asks_pin": true,
+      "never_asks_card_details": true,
+      "never_asks_to_install_apps": true
+    },
+    "sources": [
+      {
+        "url": "https://... page where you found each fact",
+        "checked": "YYYY-MM-DD"
+      }
+    ],
+    "coverage": {
+      "official_numbers": "partial",
+      "official_domains": "partial",
+      "sender_ids": "partial"
+    },
+    "fact_sources": {
+      "official_numbers": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "official_domains": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "sender_ids": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "never_asks_otp": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "never_asks_pin": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "never_asks_card_details": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      },
+      "never_asks_to_install_apps": {
+        "url": "https://official-bank-site/path-to-exact-fact",
+        "checked": "YYYY-MM-DD"
+      }
+    }
+  }
+}

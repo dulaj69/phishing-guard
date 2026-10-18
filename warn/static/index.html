@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify-then-Warn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Verify-then-Warn <span class="muted">J26-IT-442 prototype</span></div>
+    <div class="controls">
+      <label>Mode
+        <select id="mode">
+          <option value="demo">Demo</option>
+          <option value="study">Study</option>
+        </select>
+      </label>
+      <label>Language
+        <select id="lang">
+          <option value="">Auto</option>
+          <option value="en">English</option>
+          <option value="si">සිංහල</option>
+          <option value="singlish">Singlish</option>
+        </select>
+      </label>
+      <label>Warning condition
+        <select id="condition">
+          <option value="evidence_aware">User + evidence</option>
+          <option value="user_only">User only</option>
+          <option value="static">Static</option>
+        </select>
+      </label>
+      <label id="consent-wrap" hidden><input type="checkbox" id="consent">I consent to anonymous decision logging in this simulated pilot.</label>
+      <label id="pid-wrap" hidden>Participant
+        <input id="pid" placeholder="e.g. P07" maxlength="20">
+      </label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="phone" aria-label="Simulated phone">
+      <div class="phone-bar"><span id="clock">9:41</span><span>Messages</span><span></span></div>
+
+      <div id="inbox" class="screen">
+        <ul id="threads" class="threads"></ul>
+        <form id="custom" class="custom">
+          <textarea id="custom-text" rows="3" placeholder="Paste any SMS here to test it…"></textarea>
+          <div class="row">
+            <input id="custom-sender" placeholder="Sender (optional)">
+            <button type="submit">Check</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="thread" class="screen" hidden>
+        <button id="back" class="back">‹ Inbox</button>
+        <div class="sender" id="t-sender"></div>
+        <div class="bubble" id="t-text"></div>
+        <div id="tricks" class="tricks" hidden></div>
+
+        <div id="initial" class="ask" hidden>
+          <p>Before the app checks it: what do you think?</p>
+          <div class="row">
+            <button data-initial="scam" class="btn danger-o">Scam</button>
+            <button data-initial="safe" class="btn safe-o">Safe</button>
+          </div>
+        </div>
+
+        <div id="loading" class="muted center" hidden>Checking…</div>
+        <div id="warning" hidden></div>
+
+        <div id="actions" class="actions" hidden>
+          <button class="btn" data-act="call_sms_number" id="btn-call">Call the number in the SMS</button>
+          <button class="btn" data-act="open_link" id="btn-link">Open the link</button>
+          <button class="btn danger" data-act="report">Report as scam</button>
+          <button class="btn ghost" data-act="trust">I think this is real</button>
+        </div>
+        <div id="after" hidden></div>
+      </div>
+    </section>
+
+    <aside class="hood" id="hood">
+      <h2>Under the hood</h2>
+      <p class="muted">Pick a message to see what each part of the system found.</p>
+      <div id="hood-body"></div>
+    </aside>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
