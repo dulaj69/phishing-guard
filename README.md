@@ -155,3 +155,9 @@ Open `/app/lab/` (now the home page) for three independent experiments:
 The SMS demo remains at `/app/`. Read `docs/workbench_demo.md` before presenting.
 These instruments make the research inspectable; they do not establish novelty or
 replace real local data, expert validation, or an approved participant study.
+
+## Public checking and practice
+
+The root URL now opens `/app/`, a focused SMS checker. It calls the existing analysis pipeline without participant identity, study mode or planted errors. Results show the requested action, warning explanations, evidence availability and independent verification steps. No check history is stored. The awareness exercises run in browser memory only and are educational, not a validated assessment.
+
+Research experiments remain at `/app/lab/`; the former phone-style study interface is preserved at `/app/study/`. These are separate interfaces, not access-controlled areas. Authentication, account-backed learning history and production deployment hardening remain future work. This release does not provide email-header or attachment scanning.

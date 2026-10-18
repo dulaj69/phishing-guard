@@ -1,100 +1,11 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Verify-then-Warn</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand"><a href="/app/lab/">Research workbench</a> · Verify-then-Warn <span class="muted">J26-IT-442 prototype</span></div>
-    <div class="controls">
-      <label>Mode
-        <select id="mode">
-          <option value="demo">Demo</option>
-          <option value="study">Study</option>
-        </select>
-      </label>
-      <label>Language
-        <select id="lang">
-          <option value="">Auto</option>
-          <option value="en">English</option>
-          <option value="si">සිංහල</option>
-          <option value="singlish">Singlish</option>
-        </select>
-      </label>
-      <label>Warning condition
-        <select id="condition">
-          <option value="evidence_aware">User + evidence</option>
-          <option value="user_only">User only</option>
-          <option value="static">Static</option>
-        </select>
-      </label>
-      <label id="consent-wrap" hidden><input type="checkbox" id="consent">I consent to anonymous decision logging in this simulated pilot.</label>
-      <label id="pid-wrap" hidden>Participant
-        <input id="pid" placeholder="e.g. P07" maxlength="20">
-      </label>
-    </div>
-  </header>
-
-  <main class="layout">
-    <section class="phone" aria-label="Simulated phone">
-      <div class="phone-bar"><span id="clock">9:41</span><span>Messages</span><span></span></div>
-
-      <div id="inbox" class="screen">
-        <ul id="threads" class="threads"></ul>
-        <form id="custom" class="custom">
-          <textarea id="custom-text" rows="3" placeholder="Paste any SMS here to test it…"></textarea>
-          <div class="row">
-            <input id="custom-sender" placeholder="Sender (optional)">
-            <button type="submit">Check</button>
-          </div>
-        </form>
-      </div>
-
-      <div id="thread" class="screen" hidden>
-        <button id="back" class="back">‹ Inbox</button>
-        <div class="sender" id="t-sender"></div>
-        <div class="bubble" id="t-text"></div>
-        <div id="tricks" class="tricks" hidden></div>
-
-        <div id="initial" class="ask" hidden>
-          <p>Before the app checks it: what do you think?</p>
-          <div class="row">
-            <button data-initial="scam" class="btn danger-o">Scam</button>
-            <button data-initial="safe" class="btn safe-o">Safe</button>
-          </div>
-        </div>
-
-        <div id="loading" class="muted center" hidden>Checking…</div>
-        <div id="warning" hidden></div>
-
-        <div id="actions" class="actions" hidden>
-          <button class="btn" data-act="call_sms_number" id="btn-call">Call the number in the SMS</button>
-          <button class="btn" data-act="open_link" id="btn-link">Open the link</button>
-          <button class="btn danger" data-act="report">Report as scam</button>
-          <button class="btn ghost" data-act="trust">I think this is real</button>
-        </div>
-        <div id="after" hidden></div>
-      </div>
-    </section>
-
-    <aside class="hood" id="hood">
-      <h2>Under the hood</h2>
-      <p class="muted">Pick a message to see what each part of the system found.</p>
-      <div id="hood-body"></div>
-    </aside>
-  </main>
-
-  <div id="modal" class="modal" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <div id="modal-body"></div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Verify-then-Warn — Check a suspicious SMS</title><link rel="stylesheet" href="product.css"></head>
+<body><header><a class="brand" href="/app/" aria-label="Verify then Warn home"><span class="logo">V↗</span> Verify<span class="brand-light">then Warn</span></a><nav aria-label="Main navigation"><button class="nav active" id="check-tab" aria-pressed="true">Check a message</button><button class="nav" id="learn-tab" aria-pressed="false">Build your awareness</button></nav><span class="beta">Research preview</span></header>
+<main><section id="checker"><div class="intro"><span class="eyebrow">A PAUSE BEFORE YOU ACT</span><h1>Something feels off?<br><em>Check the message.</em></h1><p>Make sense of a suspicious banking SMS. Understand what it asks, what we could verify, and your next step.</p></div>
+<div class="workspace"><form id="check-form" class="panel"><div class="panel-heading"><h2>Your message</h2><span class="tag">SMS text</span></div><label for="message">Paste the message you received</label><textarea id="message" maxlength="2000" rows="7" required placeholder="Paste the SMS here…" aria-describedby="privacy count"></textarea><div class="input-meta"><span id="privacy">Remove personal details and actual OTPs before checking.</span><span id="count">0 / 2,000</span></div><div class="fields"><div><label for="sender">Sender <span class="optional">(optional)</span></label><input id="sender" maxlength="40" placeholder="Name or number shown"></div><div><label for="language">Explanation language</label><select id="language"><option value="en">English</option><option value="si">සිංහල</option><option value="singlish">Singlish</option></select></div></div><button class="primary" id="submit" type="submit">Check message <span>↗</span></button><p class="small">No account needed. This check does not save your message to a history or study log.</p><div id="error" role="alert" hidden></div><div class="example-row"><span>Try a fictional example</span><button type="button" id="example">An urgent OTP request →</button></div></form>
+<aside id="empty" class="guide"><span class="line-icon">↗</span><h2>A clearer next step,<br>before you respond.</h2><ol><li><b>Understand the request</b><span>Identify what the message wants you to do.</span></li><li><b>Look at the evidence</b><span>See what is supported, contradicted or unknown.</span></li><li><b>Choose how to proceed</b><span>Get practical steps for independent verification.</span></li></ol><p class="small">Designed for banking SMS in English, Sinhala and Singlish. Email headers, attachments and linked websites are not scanned.</p></aside>
+<section id="result" class="panel result" aria-live="polite" aria-label="Message assessment" hidden></section></div>
+<div class="scope"><b>A useful check, not proof of authenticity.</b><p>The model is still being evaluated. Bank evidence coverage is limited and includes fictional research fixtures. A low-risk result does not prove that a sender is genuine.</p></div></section>
+<section id="learn" hidden><div class="intro"><span class="eyebrow">BUILD YOUR AWARENESS</span><h1>Practice the pause.<br><em>Spot the next warning sign.</em></h1><p>Four short, fictional scenarios. Make your own decision and learn why it matters. No sign-up, tracking or saved score.</p></div><div class="panel practice" id="practice"></div><p class="small practice-note">This is a learning exercise, not a validated assessment of your ability or a research participant session.</p></section>
+<section class="how"><span class="eyebrow">GOOD HABITS, EVERY TIME</span><div class="habits"><article><span>01</span><h3>Keep your codes to yourself</h3><p>Do not send an OTP or PIN in response to an unexpected message.</p></article><article><span>02</span><h3>Take a different route</h3><p>Open your usual bank app yourself, or use contact details on your card.</p></article><article><span>03</span><h3>Give yourself a moment</h3><p>An urgent deadline is a reason to pause and check before acting.</p></article></div></section></main>
+<footer><span>Verify then Warn <small>Built to support informed decisions.</small></span><a href="/app/lab/">For researchers ↗</a></footer><script src="product.js"></script></body></html>

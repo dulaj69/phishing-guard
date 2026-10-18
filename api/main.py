@@ -159,4 +159,4 @@ app.mount("/app", StaticFiles(directory=STATIC, html=True), name="app")
 
 @app.get("/")
 def home():
-    return RedirectResponse("/app/lab/")
+    return RedirectResponse("/app/")

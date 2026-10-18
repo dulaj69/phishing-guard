@@ -9,7 +9,10 @@ client=TestClient(app)
 
 
 def test_workbench_and_catalog():
-    assert 'Research workbench' in client.get('/').text
+    assert client.get('/', follow_redirects=False).headers['location'] == '/app/'
+    assert 'Research workbench' in client.get('/app/lab/').text
+    assert 'study' not in client.get('/app/').text.split('<nav')[1].split('</nav>')[0]
+    assert 'Under the hood' in client.get('/app/study/').text
     c=client.get('/research/catalog').json()
     assert len(c['contributions'])==3 and len(c['cases'])==18
     assert c['model_fingerprint']
