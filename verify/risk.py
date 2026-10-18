@@ -52,8 +52,14 @@ def assess(scam_score, primary_action, fact_checks, action_uncertainty="rule_bas
         tier, adjustment = "High", "up"
     evidence = ("conflicting" if failed and "pass" in results else "contradicted" if failed else
                 "supported" if "pass" in results else "insufficient")
+    # Supporting a copied domain does not resolve a request to call a different
+    # number. Evidence must address the extracted action to resolve a middle score.
+    relevant_check = {"call": "official_number", "click": "official_domain",
+                      "share_credential": "bank_rule", "pay": "bank_rule",
+                      "install": "bank_rule", "reply": "bank_rule"}.get(primary_action)
+    relevant_support = any(c["check"] == relevant_check and c["result"] == "pass" for c in fact_checks)
     abstain = (not failed and primary_action != "share_credential" and
-               ((like == "Medium" and evidence == "insufficient") or action_uncertainty == "uncertain"))
+               ((like == "Medium" and not relevant_support) or action_uncertainty == "uncertain"))
     reasons = [f"Model score {scam_score:.2f}; not a calibrated probability of fraud.",
                f"The message {HARM_WORDS.get(primary_action, 'has an uncertain action')}."]
     reasons += [c["detail"] for c in fact_checks]
@@ -62,5 +68,5 @@ def assess(scam_score, primary_action, fact_checks, action_uncertainty="rule_bas
     return {"tier": tier, "likelihood": like, "harm": harm, "matrix_tier": matrix_tier,
             "adjustment": adjustment, "reasons": reasons, "abstain": abstain,
             "decision": "abstain" if abstain else "assessed", "evidence_quality": evidence,
-            "action_uncertainty": action_uncertainty,
-            "policy_version": "evidence_v1", "score_semantics": "uncalibrated_weighted_score"}
+            "action_uncertainty": action_uncertainty, "action_relevant_support": relevant_support,
+            "policy_version": "evidence_v2_action_relevance", "score_semantics": "uncalibrated_weighted_score"}

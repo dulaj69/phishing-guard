@@ -113,3 +113,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .modal-card { background: var(--panel); border-radius: 16px; padding: 20px; max-width: 380px; width: 100%; }
 .modal-card h3 { margin-top: 0; }
 .modal-card .opts { display: grid; gap: 8px; margin: 12px 0; }
+
+/* Explicit display rules must not override the hidden attribute. */
+[hidden] { display: none !important; }

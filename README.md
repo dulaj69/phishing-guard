@@ -143,3 +143,15 @@ Model weights, downloaded datasets, donated SMS and study logs are not uploaded.
 Create your own branch before editing, for example `git switch -c feature/my-change`,
 then push that branch and open a pull request. Folder ownership is listed above.
 Read `docs/research_plan.md` and `shared/contract.md` before changing interfaces.
+
+## Interactive research workbench
+
+Open `/app/lab/` (now the home page) for three independent experiments:
+
+1. **Action lab:** authored contrast cases, raw/normalised model outputs, keyword/contextual action comparisons and a downloadable diagnostic benchmark.
+2. **Evidence lab:** controlled missing/stale/conflicting evidence, baseline risk comparisons, leave-one-fact-out sensitivity and minimum sufficient evidence sets.
+3. **Human decisions:** simulated warning-policy comparisons and a server-assigned nine-trial rehearsal/pilot with an immediate no-advice transfer block.
+
+The SMS demo remains at `/app/`. Read `docs/workbench_demo.md` before presenting.
+These instruments make the research inspectable; they do not establish novelty or
+replace real local data, expert validation, or an approved participant study.

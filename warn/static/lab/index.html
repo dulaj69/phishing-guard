@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify-then-Warn · Research workbench</title>
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+<a class="wordmark" href="/app/lab/"><span class="logo">V<span>↗</span></span><span>Verify<span class="wordmark-sub">then Warn</span></span></a>
+<div class="side-label">RESEARCH WORKBENCH</div>
+<nav aria-label="Research sections">
+<button data-view="overview" class="nav active"><span>00</span> Overview</button>
+<button data-view="actions" class="nav"><span>01</span> Action lab <small>Sanmith</small></button>
+<button data-view="evidence" class="nav"><span>02</span> Evidence lab <small>Perera</small></button>
+<button data-view="warnings" class="nav"><span>03</span> Human decisions <small>Rathnayake</small></button>
+</nav>
+<div class="side-bottom"><span class="live-dot"></span> Local research prototype<p>English · Sinhala · Singlish</p><a href="/app/">Open SMS application ↗</a><a href="/docs" target="_blank" rel="noopener">Explore API ↗</a></div>
+</aside>
+<main>
+<header class="topline"><span>J26-IT-442 <span class="separator">/</span> <span id="page-name">Research overview</span></span><button id="export" class="quiet" disabled>Export current result ↓</button></header>
+<div id="error" class="error" role="alert" hidden></div>
+<section id="overview" class="view">
+<div class="hero"><div class="eyebrow">FROM A PREDICTION TO A DEFENSIBLE DECISION</div><h1>What does it ask?<br>What can we verify?<br><em>Will the warning help?</em></h1><p>Three research questions. One working pipeline.<br>Inspect the method, change the conditions, and measure what actually happens.</p><div class="hero-actions"><button class="primary" id="start-tour">Explore the action lab ↗</button><a href="/app/" class="button-link">Try an SMS</a></div><div class="hero-orbit" aria-hidden="true"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div><span class="orbit-center">V<span>→</span>W</span><span class="orbit-tag tag1">ACTION</span><span class="orbit-tag tag2">EVIDENCE</span><span class="orbit-tag tag3">DECISION</span></div></div>
+<div class="status-strip"><div><b>3</b><span>independent workstreams</span></div><div><b id="fixture-count">—</b><span>authored diagnostic cases</span></div><div><b>3</b><span>controlled warning conditions</span></div><div><b>6 + 3</b><span>advice and transfer trials</span></div></div>
+<div class="section-heading"><div><div class="eyebrow">THE RESEARCH CONTRACT</div><h2>Each member owns a question.</h2></div><span class="pill">Candidate contributions · validation pending</span></div>
+<div id="contributions" class="cards three"></div>
+<div class="note"><b>What counts as progress?</b> Working components and reproducible experiments are implemented. Real local gold data, expert validation and participant findings remain separate milestones. This page does not claim that 50% of the research has been validated.</div>
+<div class="panel provenance"><div><h3>Evidence, with its origin visible.</h3><p><span class="pill green">Live diagnostic</span> Computed by the current model on authored fixtures.</p><p><span class="pill amber">Controlled simulation</span> Evidence or profiles intentionally changed for inspection.</p><p><span class="pill blue">Pilot observation</span> Only appears after a person completes a trial.</p></div><div><h3>Current model</h3><p>Character TF-IDF + logistic regression.<br>Clause-based action extraction.</p><code id="fingerprint">Loading model fingerprint…</code><p class="small">Experimental joint XLM-R training exists separately; it is not serving these predictions.</p></div></div>
+</section>
+<section id="actions" class="view" hidden>
+<div class="eyebrow">01 / SANMITH / DETECTION</div><h1 class="section-title">Meaning should survive<br><em>a change in spelling.</em></h1><p class="lede">But “share your OTP” and “never share your OTP” should not produce the same requested action. Test both invariance and contrast.</p>
+<div class="panel"><div class="toolbar"><label class="grow">Diagnostic case<select id="case"></select></label><button id="inspect" class="primary">Run contrast test</button><button id="benchmark" class="secondary">Run all cases</button></div><p class="small">Fixed diagnostic perturbations. No automatic evasion search. Sinhala and Singlish fixtures await native-speaker review.</p></div>
+<div id="action-result" aria-live="polite" class="result-space"><div class="empty">Choose a case, then run the real pipeline.<span>Raw model output and normalised output will appear side by side.</span></div></div>
+</section>
+<section id="evidence" class="view" hidden>
+<div class="eyebrow">02 / PERERA / VERIFICATION</div><h1 class="section-title">A decision is only as strong<br><em>as the facts behind it.</em></h1><p class="lede">Change evidence availability without changing the message. Inspect which facts actually affect the tier or the decision to abstain.</p>
+<div class="split"><div class="panel controls-panel"><span class="pill amber">Controlled simulation</span><label>Requested action<select id="evidence-scenario"><option value="callback">Call a number</option><option value="credential">Share an OTP</option><option value="link">Open a link</option></select></label><label>Manually controlled model score <output id="score-value">0.55</output><input type="range" id="score" min="0" max="1" step="0.01" value="0.55"></label><p class="small">A score, not a calibrated probability. This slider overrides the model for the experiment.</p><label class="check-row"><input id="contradiction" type="checkbox" checked> Explicit supported contradiction</label><label class="check-row"><input id="copied-domain" type="checkbox" checked> Matching published domain</label><label class="check-row"><input id="stale" type="checkbox"> Evidence is stale</label><label class="check-row"><input id="missing" type="checkbox"> Remove all evidence</label><label class="check-row"><input id="uncertain-action" type="checkbox"> Action extraction is uncertain</label><button id="audit" class="primary">Run evidence audit</button></div><div id="evidence-result" aria-live="polite"><div class="empty">What would change your decision?<span>Run the audit to compare policies and inspect evidence dependence.</span></div></div></div>
+</section>
+<section id="warnings" class="view" hidden>
+<div class="eyebrow">03 / RATHNAYAKE / HUMAN DECISIONS</div><h1 class="section-title">A warning should improve<br><em>the next decision, too.</em></h1><p class="lede">Compare warning policies, then rehearse a controlled session with an independent, no-advice transfer round.</p>
+<div class="panel"><div class="toolbar"><label class="grow">Simulated reliance profile<select id="persona"><option value="over_reliant">Over-reliant on AI</option><option value="under_reliant">Under-reliant on AI</option><option value="balanced">Balanced</option><option value="new">New participant</option></select></label><label class="grow">Evidence context<select id="preview-case"><option value="otp-en">Credential request / contradiction</option><option value="callback-en">Callback / unverified number</option></select></label><button id="preview" class="secondary">Compare warnings</button></div><div id="preview-result"></div></div>
+<div class="section-heading"><div><div class="eyebrow">CONTROLLED PILOT INSTRUMENT</div><h2>Before advice. After advice. Without advice.</h2></div></div>
+<div id="pilot-setup" class="panel"><div class="cards three compact"><div><b>01 · Initial judgement</b><p>Record a decision and confidence before AI advice.</p></div><div><b>02 · Evidence comprehension</b><p>Check understanding, action choice and final judgement.</p></div><div><b>03 · Immediate transfer</b><p>Three new scenarios with no AI advice. This is not a long-term learning test.</p></div></div><div class="toolbar"><label>Session type<select id="session-mode"><option value="rehearsal">Demo rehearsal — excluded from pilot findings</option><option value="pilot">Consented pilot — locally recorded</option></select></label><button id="start-session" class="primary">Start a session</button></div><label id="pilot-consent-row" class="check-row" hidden><input id="pilot-consent" type="checkbox">I consent to local logging of my choices, confidence and timing in this fictional pilot. No name or contact details are collected. I can stop at any time. This is a pilot, not a formally validated study.</label><p class="small">Condition assigned by the server, balanced across started sessions. Six advice trials, including intentionally incorrect advice, followed by three transfer trials. All calls and links are simulated.</p></div>
+<div id="pilot-active" class="panel" hidden></div><div id="pilot-report" hidden></div>
+</section>
+<footer>Verify-then-Warn <span>Research prototype · fictional bank fixtures · no real calls or payments</span></footer>
+</main>
+</div><script src="lab.js"></script>
+</body></html>

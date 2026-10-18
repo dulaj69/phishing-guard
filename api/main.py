@@ -23,12 +23,14 @@ from detection.config import MODEL_VERSION
 from detection.model import detect
 from verify.service import verify as run_verify
 from warn import reliance, study
+from research.lab.api import router as research_router
 
 ROOT = Path(__file__).resolve().parent.parent
 SCENARIOS = ROOT / "warn" / "data" / "scenarios.json"
 STATIC = ROOT / "warn" / "static"
 
 app = FastAPI(title="J26-IT-442 Verify-then-Warn API", version=MODEL_VERSION)
+app.include_router(research_router)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -157,4 +159,4 @@ app.mount("/app", StaticFiles(directory=STATIC, html=True), name="app")
 
 @app.get("/")
 def home():
-    return RedirectResponse("/app/")
+    return RedirectResponse("/app/lab/")
