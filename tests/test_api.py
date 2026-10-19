@@ -9,6 +9,14 @@ client = TestClient(app)
 SCAM = "Orion Bank: obage account eka block wenawa. Wahama 0771234567 ta call karanna."
 
 
+@pytest.fixture(autouse=True)
+def signed_in(temp_reliance_db):
+    client.cookies.clear()
+    client.headers.update({'X-Research-Request':'1'})
+    result=client.post('/account/signup',json={'username':'test_researcher','password':'a long test passphrase'})
+    assert result.status_code==201
+
+
 def test_health_and_app_page():
     assert client.get("/health").json() == {"status": "ok"}
     assert "Verify-then-Warn" in client.get("/app/").text

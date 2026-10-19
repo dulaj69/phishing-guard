@@ -11,6 +11,12 @@ SMS ──► 1. detection (Sanmith) ──► 2. verify (Perera) ──► 3. w
 This is the **PP1 prototype**: every part works end to end. The model is a simple
 baseline trained on mostly synthetic data, so all numbers are **preliminary**.
 
+## Individual workspace and learning lab
+
+Open `/app/` for the anonymous SMS checker or `/app/workspace/` for individual signup and login. Signed-in users can access all three research labs and save private learning sessions. Rathnayake's extension compares a misconception-targeted lesson with a static lesson, followed by immediate and server-gated 24-hour transfer questions. These are authored instruments, not validated learning findings.
+
+Read [the workspace and viva addendum](docs/individual_workspace.md) for the technical flow and [the three-member research roadmap](docs/next_semester_research.md) for proposed next-semester contributions. Organisation accounts are deferred. The local login has no email recovery; public deployment needs HTTPS, `VTW_SECURE_COOKIE=1` and further review.
+
 ## 1. First-time setup (Mac)
 
 Open the project folder in VS Code, then open **Terminal > New Terminal**:

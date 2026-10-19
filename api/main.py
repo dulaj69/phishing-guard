@@ -12,13 +12,13 @@ import json
 from pathlib import Path
 from typing import Literal, Optional
 
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from api import pipeline
+from api import pipeline, accounts
+from research.lab.learning import router as learning_router
 from detection.config import MODEL_VERSION
 from detection.model import detect
 from verify.service import verify as run_verify
@@ -31,7 +31,25 @@ STATIC = ROOT / "warn" / "static"
 
 app = FastAPI(title="J26-IT-442 Verify-then-Warn API", version=MODEL_VERSION)
 app.include_router(research_router)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.include_router(accounts.router)
+app.include_router(learning_router)
+
+
+@app.middleware("http")
+async def private_pages(request: Request, call_next):
+    path = request.url.path
+    if path.startswith(("/app/lab", "/app/study")):
+        try:
+            accounts.current(request)
+        except HTTPException:
+            return RedirectResponse("/app/workspace/")
+    response = await call_next(request)
+    if path.startswith(("/account", "/learning", "/research", "/profile", "/app/workspace", "/app/lab", "/app/study")):
+        response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "same-origin"
+    response.headers["X-Frame-Options"] = "DENY"
+    return response
 
 
 class Message(BaseModel):
@@ -114,9 +132,11 @@ def verify_one(message: Message):
 
 # ---------- Full pipeline + Part 3: warn (Rathnayake) ----------
 @app.post("/analyze")
-def analyze(req: AnalyzeRequest):
+def analyze(req: AnalyzeRequest, request: Request):
     scenario = None
     if req.study_mode:
+        user = accounts.current(request)
+        req.user_id = 'account:' + user['id']
         scenario = next((s for s in _scenarios() if s["id"] == req.scenario_id), None)
         if not scenario or not req.user_id or req.initial_choice is None:
             raise HTTPException(422, "Study mode requires a scenario, participant ID and initial decision.")
@@ -139,7 +159,9 @@ def scenarios():
 
 
 @app.post("/decision")
-def decision(d: Decision):
+def decision(d: Decision, request: Request):
+    user = accounts.current(request)
+    d.user_id = "account:" + user["id"]
     if not d.analysis_id:
         raise HTTPException(422, "A server-issued study analysis_id is required; demo feedback is not labelled research data.")
     try:
@@ -149,8 +171,9 @@ def decision(d: Decision):
 
 
 @app.get("/profile/{user_id}")
-def profile(user_id: str):
-    return reliance.profile(user_id)
+def profile(user_id: str, request: Request):
+    user = accounts.current(request)
+    return reliance.profile("account:" + user["id"])
 
 
 # ---------- Web app ----------

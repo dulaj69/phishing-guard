@@ -7,7 +7,7 @@ const conditionName = c => ({static:'Static',user_only:'User only',evidence_awar
 const badge = (text, cls='') => `<span class="pill ${cls}">${esc(text)}</span>`;
 const metric = (value, label) => `<div class="metric"><b>${esc(value)}</b><span>${esc(label)}</span></div>`;
 function showError(error){$('error').textContent=error.message || String(error);$('error').hidden=false;}
-async function api(path, data){const response=await fetch('/research'+path,data === undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const body=await response.json();if(!response.ok)throw Error(typeof body.detail==='string'?body.detail:'The request could not be completed.');return body;}
+async function api(path, data){const response=await fetch('/research'+path,data === undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','X-Research-Request':'1'},body:JSON.stringify(data)});const body=await response.json();if(!response.ok)throw Error(typeof body.detail==='string'?body.detail:'The request could not be completed.');return body;}
 async function busy(id, fn){const b=$(id), text=b.textContent;b.disabled=true;b.textContent='Running…';$('error').hidden=true;try{await fn();}catch(e){showError(e);}finally{b.disabled=false;b.textContent=text;}}
 function saveResult(result, view=state.view){state.results[view]=result;if(state.view===view)$('export').disabled=false;}
 function navigate(view){state.view=view;document.querySelectorAll('.view').forEach(e=>e.hidden=e.id!==view);document.querySelectorAll('[data-view]').forEach(e=>e.classList.toggle('active',e.dataset.view===view));$('page-name').textContent=names[view];$('export').disabled=!state.results[view];$('error').hidden=true;window.scrollTo({top:0,behavior:'smooth'});}
@@ -79,3 +79,5 @@ async function renderReport(){
 }
 async function boot(){try{const c=await api('/catalog');$('fixture-count').textContent=c.cases.length;$('fingerprint').textContent='Model fingerprint '+c.model_fingerprint;$('case').innerHTML=c.cases.map(x=>`<option value="${esc(x.id)}">${esc(x.name)} · ${esc(x.language)}</option>`).join('');$('contributions').innerHTML=c.contributions.map((x,i)=>`<article class="card"><div class="owner">0${i+1} / ${esc(x.owner)}</div><h3>${esc(x.title)}</h3><p>${esc(x.question)}</p><div class="built"><b>IMPLEMENTED</b><p>${esc(x.built)}</p></div><div class="next"><b>Next evidence milestone</b><br>${esc(x.remaining)}</div><button class="quiet" data-open="${['actions','evidence','warnings'][i]}">Open experiment ↗</button></article>`).join('');document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>navigate(b.dataset.open));}catch(e){showError(e);}}
 boot();
+// Direct links from the individual workspace keep each member's component visible.
+if (['overview','actions','evidence','warnings'].includes(location.hash.slice(1))) navigate(location.hash.slice(1));

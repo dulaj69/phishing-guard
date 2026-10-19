@@ -8,6 +8,14 @@ from warn import reliance
 client=TestClient(app)
 
 
+@pytest.fixture(autouse=True)
+def signed_in(temp_reliance_db):
+    client.cookies.clear()
+    client.headers.update({'X-Research-Request':'1'})
+    result=client.post('/account/signup',json={'username':'test_researcher','password':'a long test passphrase'})
+    assert result.status_code==201
+
+
 def test_workbench_and_catalog():
     assert client.get('/', follow_redirects=False).headers['location'] == '/app/'
     assert 'Research workbench' in client.get('/app/lab/').text

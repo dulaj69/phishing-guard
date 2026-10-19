@@ -1,11 +1,12 @@
 """API surface for bounded research demonstrations."""
 from typing import Literal, Optional
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from api import accounts
 from pydantic import BaseModel, Field
 from research.lab import robustness, evidence, pilot
 from research.lab.cases import CASES
 
-router = APIRouter(prefix='/research', tags=['Research workbench'])
+router = APIRouter(prefix='/research', tags=['Research workbench'], dependencies=[Depends(accounts.current)])
 
 
 def guarded(fn):
@@ -28,9 +29,9 @@ def catalog():
                 {'owner':'Perera','title':'Evidence dependency & uncertainty','question':'Which facts are sufficient for a risk decision, and what happens when evidence disappears?',
                  'built':'Controlled evidence interventions, baseline comparisons and exact subset audit.',
                  'remaining':'Reviewed real bank registry, expert rankings and threshold validation.'},
-                {'owner':'Rathnayake','title':'Evidence comprehension & transfer','question':'Do warnings support correct independent decisions after advice is removed?',
-                 'built':'Server-assigned three-condition pilot, confidence/comprehension measures and transfer block.',
-                 'remaining':'Approved study protocol, sample-size justification, recruitment and delayed follow-up.'}]}
+                {'owner':'Rathnayake','title':'Adaptive learning, reliance & transfer','question':'Do warnings support correct independent decisions after advice is removed?',
+                 'built':'Three-condition warning pilot plus private misconception-targeted learning, static comparison, confidence and reason measures, immediate transfer and a 24-hour follow-up gate.',
+                 'remaining':'Expert-reviewed multilingual instruments, approved study protocol, sample-size justification, recruitment and actual delayed observations.'}]}
 
 
 class CaseRequest(BaseModel):
@@ -68,8 +69,11 @@ class SessionRequest(BaseModel):
 
 
 @router.post('/pilot/sessions')
-def create(req:SessionRequest):
-    return guarded(lambda:pilot.create(req.mode,req.consent))
+def create(req:SessionRequest,user=Depends(accounts.current)):
+    result = guarded(lambda:pilot.create(req.mode,req.consent))
+    with accounts.connect() as con:
+        con.execute('INSERT INTO pilot_owners VALUES (?,?)',(result['session_id'],user['id']))
+    return result
 
 
 class Initial(BaseModel):
@@ -84,22 +88,26 @@ class Final(Initial):
 
 
 @router.get('/pilot/{token}')
-def get_session(token:str):
+def get_session(token:str,user=Depends(accounts.current)):
+    accounts.own_pilot(token,user)
     return guarded(lambda:pilot.status(token))
 
 
 @router.post('/pilot/{token}/initial')
-def initial(token:str,req:Initial):
+def initial(token:str,req:Initial,user=Depends(accounts.current)):
+    accounts.own_pilot(token,user)
     return guarded(lambda:pilot.begin(token,**req.model_dump()))
 
 
 @router.post('/pilot/{token}/final')
-def final(token:str,req:Final):
+def final(token:str,req:Final,user=Depends(accounts.current)):
+    accounts.own_pilot(token,user)
     return guarded(lambda:pilot.finish(token,**req.model_dump()))
 
 
 @router.get('/pilot/{token}/report')
-def report(token:str):
+def report(token:str,user=Depends(accounts.current)):
+    accounts.own_pilot(token,user)
     return guarded(lambda:pilot.report(token))
 
 
