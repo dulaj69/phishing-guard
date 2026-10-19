@@ -161,3 +161,7 @@ replace real local data, expert validation, or an approved participant study.
 The root URL now opens `/app/`, a focused SMS checker. It calls the existing analysis pipeline without participant identity, study mode or planted errors. Results show the requested action, warning explanations, evidence availability and independent verification steps. No check history is stored. The awareness exercises run in browser memory only and are educational, not a validated assessment.
 
 Research experiments remain at `/app/lab/`; the former phone-style study interface is preserved at `/app/study/`. These are separate interfaces, not access-controlled areas. Authentication, account-backed learning history and production deployment hardening remain future work. This release does not provide email-header or attachment scanning.
+
+### Visible individual contributions
+
+Every successful public SMS check now shows a fully expanded, three-member analysis report on the same page. Sanmith’s section shows classifier outputs, weighted score, normalization and action evidence; Perera’s shows all fact checks, occlusion contributions and the risk calculation; Rathnayake’s shows the actual generated warning, selected policy and sentence provenance. The top result links directly to each section. Full JSON can be exported locally and includes the submitted text. Anonymous checks do not create a participant profile or measure reliance.
