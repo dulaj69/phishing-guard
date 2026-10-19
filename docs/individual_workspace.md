@@ -6,7 +6,7 @@ Implemented 19 October 2026. This extends the original technical viva guide (com
 
 Run `python -m uvicorn api.main:app --host 127.0.0.1 --port 8765` in the project environment. Open `/app/` for the anonymous SMS checker or `/app/workspace/` to create a pseudonymous individual account. Use a username and a passphrase of 15–128 characters. The local build has no email recovery.
 
-Each workspace links clearly to Sanmith's action lab, Perera's evidence lab, and Rathnayake's human learning lab. Existing warning/reliance experiments remain under `/app/lab/#warnings`. Public SMS checks show the full detection, evidence, explanation, risk and warning report, expanded without member names, and do not become participant records. Every returned field is available in the complete-output section and export. The protected `/app/lab/message.html` page uses the same renderer.
+Each workspace links clearly to Sanmith's action lab, Perera's evidence lab, and Rathnayake's human learning lab. Existing warning/reliance experiments remain under `/app/lab/#warnings`. Public SMS checks show the full detection, evidence, explanation, risk and warning report, expanded without member names, and do not become participant records. The raw returned data is available through the optional export; no raw code block is displayed. The protected `/app/lab/message.html` page uses the same renderer.
 
 ## Rathnayake's extension
 
