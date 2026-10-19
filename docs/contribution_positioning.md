@@ -32,4 +32,4 @@ For each member, write a related-work comparison table with named papers, exact 
 
 ## Product and research views
 
-The public checker should help a person understand and respond to a message. It now shows risk, requested action, reasons, evidence checks and next steps. Team names and internal model/policy outputs belong to the protected research analysis page and viva documentation. The detailed live analysis remains available at `/app/lab/message.html` after sign-in.
+The public checker should help a person understand and respond to a message. It shows the complete expanded component outputs, including class scores, requested actions, explanations, evidence checks, risk calculation, warning policy and guidance. Team names remain in viva documentation rather than the public page. The protected `/app/lab/message.html` page shares the same analysis renderer.
