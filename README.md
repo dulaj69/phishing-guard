@@ -11,6 +11,12 @@ SMS ──► 1. detection (Sanmith) ──► 2. verify (Perera) ──► 3. w
 This is the **PP1 prototype**: every part works end to end. The model is a simple
 baseline trained on mostly synthetic data, so all numbers are **preliminary**.
 
+## Team branches and presentation setup
+
+Use [the team handoff guide](docs/team_handoff.md) to clone `component1` (Sanmith),
+`component2` (Sonal) or `component3` (Ravindi). Each branch contains the complete application.
+The shared integration branch remains `research/evidence-aware-actions`; `main` is still the starter.
+
 ## Individual workspace and learning lab
 
 Open `/app/` for the anonymous SMS checker or `/app/workspace/` for individual signup and login. Every public message check displays all detection, verification, explanation, risk and warning outputs in expanded sections without member names. The raw response is available through the optional JSON export rather than an on-page code block; `/app/lab/message.html` shares the same renderer. Signed-in users can access all three research labs and save private learning sessions. Rathnayake's extension compares a misconception-targeted lesson with a static lesson, followed by immediate and server-gated 24-hour transfer questions. These are authored instruments, not validated learning findings.
@@ -44,7 +50,11 @@ Optional, and worth a slide:
 python -m detection.experiment_language   # does the English public data help Singlish?
 ```
 
-### Where we are now (unseen templates only, 18 Oct 2026)
+### Historical public-data experiment (18 Oct 2026)
+
+These figures are an earlier experiment, not the results of a fresh minimal clone.
+The seed/synthetic quick start produces a different model. Do not use this table
+to describe the currently loaded model without checking its training provenance.
 
 | | Before public data | With public data |
 |---|---|---|
@@ -146,13 +156,13 @@ examples. Its results differ from training with the optional public datasets.
 For the public-data setup, follow section 2 above or run `python run_setup.py`.
 Model weights, downloaded datasets, donated SMS and study logs are not uploaded.
 
-Create your own branch before editing, for example `git switch -c feature/my-change`,
-then push that branch and open a pull request. Folder ownership is listed above.
+For the shared presentation baseline, use your assigned component branch as described in
+[the team handoff guide](docs/team_handoff.md), then open a pull request into the integration branch. Folder ownership is listed above.
 Read `docs/research_plan.md` and `shared/contract.md` before changing interfaces.
 
 ## Interactive research workbench
 
-Open `/app/lab/` (now the home page) for three independent experiments:
+Sign in at `/app/workspace/`, then open `/app/lab/` for three independent experiments:
 
 1. **Action lab:** authored contrast cases, raw/normalised model outputs, keyword/contextual action comparisons and a downloadable diagnostic benchmark.
 2. **Evidence lab:** controlled missing/stale/conflicting evidence, baseline risk comparisons, leave-one-fact-out sensitivity and minimum sufficient evidence sets.
@@ -166,7 +176,7 @@ replace real local data, expert validation, or an approved participant study.
 
 The root URL now opens `/app/`, a focused SMS checker. It calls the existing analysis pipeline without participant identity, study mode or planted errors. Results show the requested action, warning explanations, evidence availability and independent verification steps. No check history is stored. The awareness exercises run in browser memory only and are educational, not a validated assessment.
 
-Research experiments remain at `/app/lab/`; the former phone-style study interface is preserved at `/app/study/`. These are separate interfaces, not access-controlled areas. Authentication, account-backed learning history and production deployment hardening remain future work. This release does not provide email-header or attachment scanning.
+Research experiments remain at `/app/lab/`; the former phone-style study interface is preserved at `/app/study/`. The research lab and study interfaces now require sign-in. Individual accounts and account-backed learning history are implemented; production deployment hardening remains future work. This release does not provide email-header or attachment scanning.
 
 ### Visible individual contributions
 
