@@ -47,6 +47,23 @@ def test_risk_matrix_and_adjustment():
     assert risk.assess(0.8, "share_credential", [])["tier"] == "Critical"
 
 
+def test_likelihood_threshold_boundaries_and_action_harm_matrix():
+    cases = [
+        (0.3999, "Low", ["Low", "Low", "Low", "Medium"], ["Low", "Low", "Low", "High"]),
+        (0.40, "Medium", ["Low", "Medium", "Medium", "High"], ["Low", "Medium", "Medium", "High"]),
+        (0.7499, "Medium", ["Low", "Medium", "Medium", "High"], ["Low", "Medium", "Medium", "High"]),
+        (0.75, "High", ["Medium", "High", "High", "Critical"], ["Medium", "High", "High", "Critical"]),
+    ]
+    actions = ["none", "click", "call", "share_credential"]
+
+    for score, expected_likelihood, expected_matrix, expected_final in cases:
+        for action, matrix_tier, final_tier in zip(actions, expected_matrix, expected_final):
+            result = risk.assess(score, action, [])
+            assert result["likelihood"] == expected_likelihood
+            assert result["matrix_tier"] == matrix_tier
+            assert result["tier"] == final_tier
+
+
 def test_otp_scam_is_never_low():
     for score in (0.4, 0.6, 0.9):
         checks = fact_check.check(anatomy(primary_action="share_credential"))
