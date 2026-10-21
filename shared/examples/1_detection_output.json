@@ -1,0 +1,71 @@
+{
+  "label": "phishing",
+  "probabilities": {
+    "legit": 0.0109,
+    "suspicious": 0.0068,
+    "phishing": 0.9823
+  },
+  "scam_score": 0.9857,
+  "language": "singlish",
+  "normalized_text": "Orion Bank: obage account eka block wenawa. Wahama 0771234567 ta call karanna.",
+  "tricks_found": [],
+  "anatomy": {
+    "claimed_bank": {
+      "id": "orion",
+      "name": "Orion Bank",
+      "via": "text"
+    },
+    "primary_action": "call",
+    "harm": 2,
+    "actions": [
+      "call"
+    ],
+    "contacts": [
+      {
+        "type": "phone",
+        "value": "0771234567",
+        "normalized": "0771234567"
+      }
+    ],
+    "tactics": [
+      "URGENCY",
+      "ACCOUNT_THREAT",
+      "AUTHORITY"
+    ],
+    "zero_link": true,
+    "spans": [
+      {
+        "type": "BANK",
+        "text": "Orion Bank",
+        "start": 0,
+        "end": 10
+      },
+      {
+        "type": "ACCOUNT_THREAT",
+        "text": "block",
+        "start": 30,
+        "end": 35
+      },
+      {
+        "type": "URGENCY",
+        "text": "Wahama",
+        "start": 44,
+        "end": 50
+      },
+      {
+        "type": "CONTACT",
+        "text": "0771234567",
+        "start": 51,
+        "end": 61
+      },
+      {
+        "type": "ACTION",
+        "text": "call",
+        "start": 65,
+        "end": 69
+      }
+    ]
+  },
+  "model_version": "tfidf-lr-0.2",
+  "latency_ms": 653.32
+}

@@ -1,0 +1,65 @@
+{
+  "show": true,
+  "level": "Critical",
+  "language": "singlish",
+  "title": "Nawathinna! Meka scam ekak wenna godak ida thiyenawa",
+  "lines": [
+    {
+      "text": "0771234567 kiyanne Orion Bank eke official number ekak nemei.",
+      "source": "fact_check:official_number",
+      "evidence": {
+        "url": "https://orionbank.example/contact",
+        "checked": "2026-10-17"
+      }
+    },
+    {
+      "text": "Meka number ekakata call karanna kiyanawa.",
+      "source": "anatomy:call"
+    },
+    {
+      "text": "Check karanna welawa nodi ikman karanna kiyanawa.",
+      "source": "tactic:URGENCY"
+    }
+  ],
+  "advice": "Me message eke thiyena dewal walata call, reply, pay, click karanna epa.",
+  "intervention": "standard",
+  "safe_action": {
+    "type": "call_official",
+    "number": "0112000100",
+    "text": "Orion Bank eke real number ekata call karanna: 0112000100",
+    "source": {
+      "url": "https://orionbank.example/contact",
+      "checked": "2026-10-17"
+    }
+  },
+  "verify_question": null,
+  "show_sources": false,
+  "lesson": "Trick eka: scammers lage number eka SMS ekata dala bank eka wage kathakaranawa. Hamadama card eke hari bank website eke number eka use karanna.",
+  "highlights": [
+    {
+      "type": "ACCOUNT_THREAT",
+      "text": "block",
+      "start": 30,
+      "end": 35
+    },
+    {
+      "type": "URGENCY",
+      "text": "Wahama",
+      "start": 44,
+      "end": 50
+    },
+    {
+      "type": "CONTACT",
+      "text": "0771234567",
+      "start": 51,
+      "end": 61
+    },
+    {
+      "type": "ACTION",
+      "text": "call",
+      "start": 65,
+      "end": 69
+    }
+  ],
+  "needs_language_review": true
+}

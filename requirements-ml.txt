@@ -1,0 +1,7 @@
+# Extra packages for explainers and the transformer model (Colab or a strong laptop).
+lime
+shap
+transformers
+datasets
+accelerate
+torch
