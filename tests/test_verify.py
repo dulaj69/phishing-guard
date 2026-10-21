@@ -64,6 +64,27 @@ def test_likelihood_threshold_boundaries_and_action_harm_matrix():
             assert result["tier"] == final_tier
 
 
+def test_supported_contradiction_raises_tier_and_prevents_abstention():
+    contradiction = {
+        "check": "official_number",
+        "result": "fail",
+        "detail": "The number contradicts the complete published list.",
+    }
+
+    result = risk.assess(0.55, "call", [contradiction], action_uncertainty="uncertain")
+    assert result["matrix_tier"] == "Medium"
+    assert result["tier"] == "High"
+    assert result["adjustment"] == "up"
+    assert result["evidence_quality"] == "contradicted"
+    assert result["decision"] == "assessed"
+    assert not result["abstain"]
+
+    critical = risk.assess(0.90, "pay", [contradiction])
+    assert critical["matrix_tier"] == "Critical"
+    assert critical["tier"] == "Critical"
+    assert critical["adjustment"] == "up"
+
+
 def test_otp_scam_is_never_low():
     for score in (0.4, 0.6, 0.9):
         checks = fact_check.check(anatomy(primary_action="share_credential"))

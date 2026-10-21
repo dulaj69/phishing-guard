@@ -47,11 +47,12 @@ decision, not a second numeric probability.
    the SMS. Missing, stale, or incomplete evidence is not automatically a
    contradiction. A credential-sharing request has a minimum High tier.
 
-5. **Decide whether to abstain.** At a Medium likelihood, absent
-   action-relevant supporting evidence, the policy abstains rather than
-   presenting a firm verdict. It also abstains when action extraction is
-   uncertain (except for the credential-request floor). The tier remains
-   visible, but advice should respect the abstention.
+5. **Decide whether to abstain.** If there is no explicit contradiction,
+   the policy abstains when likelihood is Medium and action-relevant support is
+   missing, or when action extraction is uncertain. A contradiction instead
+   raises the tier and prevents abstention. Credential requests are exempt from
+   abstention because of the minimum-High policy floor. The tier remains
+   visible when abstaining, but advice should respect the abstention.
 
 The implementation is in [`verify/risk.py`](../verify/risk.py); the detector
 score formula is in [`detection/model.py`](../detection/model.py). The
