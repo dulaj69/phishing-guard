@@ -271,6 +271,7 @@ function renderHood(r) {
       → <span>fact checks: ${esc(risk.adjustment)}</span>
       → <b>${esc(risk.tier)}</b>${risk.planted_error ? ' <span class="chip">planted error</span>' : ""}
     </div>
+    <p><b>Potential harm if fraudulent:</b> ${esc(risk.potential_harm || "Not available")}</p>
 
     <h4><span class="who">3 · Warn (Rathnayake)</span></h4>
     <dl class="kv">

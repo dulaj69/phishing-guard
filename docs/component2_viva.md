@@ -31,7 +31,9 @@ decision, not a second numeric probability.
 2. **Assign an ordinal harm level to the detected action.** No action = `0`,
    opening a link = `1`, calling or replying = `2`, and sharing credentials,
    paying, or installing an app = `3`. This is a policy category, not a
-   measured amount of harm.
+   measured amount of harm. The output also describes potential harm associated
+   with the extracted action, conditional on the request being fraudulent; it
+   does not claim that harm occurred.
 
 3. **Look up the initial tier in the likelihood-by-harm matrix.**
 
@@ -57,7 +59,7 @@ decision, not a second numeric probability.
 The implementation is in [`verify/risk.py`](../verify/risk.py); the detector
 score formula is in [`detection/model.py`](../detection/model.py). The
 Component 2 output exposes likelihood, harm level, matrix tier, evidence
-adjustment, final tier, and abstention state.
+adjustment, final tier, potential-harm description, and abstention state.
 
 ## Demonstration steps
 

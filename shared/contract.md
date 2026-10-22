@@ -39,6 +39,7 @@ Rules:
 | `risk.tier` | `Low` / `Medium` / `High` / `Critical` | Final risk tier |
 | `risk.likelihood` | `Low` / `Medium` / `High` | From `scam_score` |
 | `risk.harm` | 0–3 | From `primary_action` |
+| `risk.potential_harm` | string | Possible consequence associated with the extracted action; conditional, not a prediction that harm occurred |
 | `risk.matrix_tier` | string | Tier before the fact-check adjustment |
 | `risk.adjustment` | `up` / `down` / `none` | What the fact checks did |
 | `risk.reasons` | list of strings | Plain-English reasons, shown to the user |

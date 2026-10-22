@@ -12,7 +12,7 @@ let requests = [];
 const result = {detection: {normalized_text: 'Call 0771234567', tricks_found: [],
   scam_score: .5, label: 'suspicious', model_version: 'test', language: 'en',
   anatomy: {contacts: [{type: 'phone', normalized: '0771234567'}], tactics: [], primary_action: 'call', harm: 2, zero_link: true}},
-  verification: {fact_checks: [], explanation: [], risk: {tier: 'Medium', likelihood: 'Medium', harm: 2, matrix_tier: 'Medium', adjustment: 'none'}},
+  verification: {fact_checks: [], explanation: [], risk: {tier: 'Medium', likelihood: 'Medium', harm: 2, potential_harm: 'Could connect the user to an attacker.', matrix_tier: 'Medium', adjustment: 'none'}},
   warning: {show: true, title: 'Check first', level: 'Medium', lines: [], highlights: [],
     language: 'en', intervention: 'verify_first', verification_prompt: 'Check independently', safe_action: null},
   ai_advice: 'scam'};
@@ -25,6 +25,7 @@ vm.runInContext(fs.readFileSync('warn/static/app.js', 'utf8'), context);
   vm.runInContext("openMessage({id: 'custom', custom: true, text: 'Call 0771234567'})", context);
   await new Promise(resolve => setImmediate(resolve));
   assert.match(el('warning').innerHTML, /Check independently/);
+  assert.match(el('hood-body').innerHTML, /Potential harm if fraudulent/);
   assert.equal(el('actions').hidden, true);
   vm.runInContext("act('call_sms_number')", context);
   assert.equal(vm.runInContext('state.current.finished', context), false);

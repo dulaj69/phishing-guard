@@ -18,6 +18,16 @@ HARM_WORDS = {
     "click": "asks you to open a link",
     "none": "does not ask you to do anything",
 }
+POTENTIAL_HARMS = {
+    "share_credential": "Could enable account or payment compromise if the request is fraudulent.",
+    "pay": "Could result in financial loss if the payment request is fraudulent.",
+    "install": "Could expose the device or its data to malicious software if the request is fraudulent.",
+    "call": "Could connect the user to an attacker or expose information if the number is fraudulent.",
+    "reply": "Could confirm the number is active or expose information if the request is fraudulent.",
+    "click": "Could expose the user to credential theft or malicious content if the link is fraudulent.",
+    "none": "No risky action was extracted; this does not establish that the message is safe.",
+}
+UNKNOWN_POTENTIAL_HARM = "Potential harm is uncertain because no recognized action was extracted."
 
 #            harm:   0         1         2         3
 MATRIX = {
@@ -43,6 +53,7 @@ def _move(tier, step):
 def assess(scam_score, primary_action, fact_checks, action_uncertainty="rule_based"):
     like = likelihood(scam_score)
     harm = HARM_LEVEL.get(primary_action, 0)
+    potential_harm = POTENTIAL_HARMS.get(primary_action, UNKNOWN_POTENTIAL_HARM)
     matrix_tier = MATRIX[like][harm]
     results = [c["result"] for c in fact_checks if c["check"] != "bank_known"]
     failed = "fail" in results
@@ -61,11 +72,13 @@ def assess(scam_score, primary_action, fact_checks, action_uncertainty="rule_bas
     abstain = (not failed and primary_action != "share_credential" and
                ((like == "Medium" and not relevant_support) or action_uncertainty == "uncertain"))
     reasons = [f"Model score {scam_score:.2f}; not a calibrated probability of fraud.",
-               f"The message {HARM_WORDS.get(primary_action, 'has an uncertain action')}."]
+               f"The message {HARM_WORDS.get(primary_action, 'has an uncertain action')}.",
+               f"Potential harm if fraudulent: {potential_harm}"]
     reasons += [c["detail"] for c in fact_checks]
     if abstain:
         reasons.append("Insufficient evidence for a firm verdict; verify independently.")
-    return {"tier": tier, "likelihood": like, "harm": harm, "matrix_tier": matrix_tier,
+    return {"tier": tier, "likelihood": like, "harm": harm, "potential_harm": potential_harm,
+            "matrix_tier": matrix_tier,
             "adjustment": adjustment, "reasons": reasons, "abstain": abstain,
             "decision": "abstain" if abstain else "assessed", "evidence_quality": evidence,
             "action_uncertainty": action_uncertainty, "action_relevant_support": relevant_support,

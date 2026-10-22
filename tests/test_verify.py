@@ -85,6 +85,26 @@ def test_supported_contradiction_raises_tier_and_prevents_abstention():
     assert critical["adjustment"] == "up"
 
 
+def test_risk_output_describes_action_specific_potential_harm():
+    expected = {
+        "share_credential": "Could enable account or payment compromise",
+        "pay": "Could result in financial loss",
+        "install": "Could expose the device or its data",
+        "call": "Could connect the user to an attacker",
+        "reply": "Could confirm the number is active",
+        "click": "Could expose the user to credential theft",
+        "none": "does not establish that the message is safe",
+    }
+
+    for action, expected_description in expected.items():
+        result = risk.assess(0.5, action, [])
+        assert expected_description in result["potential_harm"]
+        assert f"Potential harm if fraudulent: {result['potential_harm']}" in result["reasons"]
+
+    unknown = risk.assess(0.5, "unknown_action", [])
+    assert unknown["potential_harm"] == risk.UNKNOWN_POTENTIAL_HARM
+
+
 def test_otp_scam_is_never_low():
     for score in (0.4, 0.6, 0.9):
         checks = fact_check.check(anatomy(primary_action="share_credential"))

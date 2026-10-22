@@ -7,7 +7,7 @@ function renderPipeline(r, original) {
  const chips=items=>items?.length?items.map(x=>`<span class="research-chip">${esc(x)}</span>`).join(' '):'<span class="small">None detected</span>';
  const table=(headers,body)=>`<div class="research-table"><table><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${body.map(row=>`<tr>${row.map(c=>`<td>${esc(c??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
  const score=d.scam_score, p=d.probabilities||{};
- const steps=[['Model score',num(score)],['Likelihood band',risk.likelihood],['Action harm',risk.harm],['Matrix tier',risk.matrix_tier],['Adjustment',risk.adjustment],['Final tier',risk.tier]];
+ const steps=[['Model score',num(score)],['Likelihood band',risk.likelihood],['Action harm',risk.harm],['Potential harm',risk.potential_harm],['Matrix tier',risk.matrix_tier],['Adjustment',risk.adjustment],['Final tier',risk.tier]];
  const spans=a.action_evidence||[];
  $('pipeline-report').innerHTML=`
  <div class="research-heading"><div><span class="eyebrow">ONE MESSAGE · THREE RESEARCH COMPONENTS</span><h2>Follow the complete analysis.</h2><p>Live outputs from the message above. Every analysis component is expanded below, including its supporting evidence and intermediate outputs.</p></div><button class="secondary" id="export-analysis">Export full analysis ↓</button></div>
