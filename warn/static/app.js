@@ -1,4 +1,4 @@
-// Verify-then-Warn inbox app (Rathnayake's part).
+// Phishing Guard inbox app (Rathnayake's part).
 // Demo mode: shows everything, good for the viva.
 // Study mode: asks the participant first, hides the answers, logs decisions.
 

@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SCENARIOS = ROOT / "warn" / "data" / "scenarios.json"
 STATIC = ROOT / "warn" / "static"
 
-app = FastAPI(title="J26-IT-442 Verify-then-Warn API", version=MODEL_VERSION)
+app = FastAPI(title="J26-IT-442 Phishing Guard API", version=MODEL_VERSION)
 app.include_router(research_router)
 app.include_router(accounts.router)
 app.include_router(learning_router)

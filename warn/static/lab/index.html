@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Verify-then-Warn · Research workbench</title>
+<title>Phishing Guard · Research workbench</title>
 <link rel="stylesheet" href="lab.css">
 </head>
 <body>
 <div class="shell">
 <aside class="sidebar">
-<a class="wordmark" href="/app/lab/"><span class="logo">V<span>↗</span></span><span>Verify<span class="wordmark-sub">then Warn</span></span></a>
+<a class="wordmark" href="/app/lab/"><span class="logo">P<span>↗</span></span><span>Phishing<span class="wordmark-sub">Guard</span></span></a>
 <div class="side-label">RESEARCH WORKBENCH</div><a href="/app/workspace/" class="button-link">← My workspace & learning lab</a>
 <nav aria-label="Research sections">
 <button data-view="overview" class="nav active"><span>00</span> Overview</button>
@@ -16,6 +16,7 @@
 <button data-view="evidence" class="nav"><span>02</span> Evidence lab <small>Perera</small></button>
 <button data-view="warnings" class="nav"><span>03</span> Human decisions <small>Rathnayake</small></button>
 </nav>
+<a href="/app/lab/boundary.html" class="button-link">New: requests, evidence & learning →</a>
 <div class="side-bottom"><span class="live-dot"></span> Local research prototype<p>English · Sinhala · Singlish</p><a href="/app/">Open SMS application ↗</a><a href="/app/lab/message.html">Full component analysis ↗</a><a href="/app/study/">Legacy study interface ↗</a><a href="/docs" target="_blank" rel="noopener">Explore API ↗</a></div>
 </aside>
 <main>
@@ -45,7 +46,7 @@
 <div id="pilot-setup" class="panel"><div class="cards three compact"><div><b>01 · Initial judgement</b><p>Record a decision and confidence before AI advice.</p></div><div><b>02 · Evidence comprehension</b><p>Check understanding, action choice and final judgement.</p></div><div><b>03 · Immediate transfer</b><p>Three new scenarios with no AI advice. This is not a long-term learning test.</p></div></div><div class="toolbar"><label>Session type<select id="session-mode"><option value="rehearsal">Demo rehearsal — excluded from pilot findings</option><option value="pilot">Consented pilot — locally recorded</option></select></label><button id="start-session" class="primary">Start a session</button></div><label id="pilot-consent-row" class="check-row" hidden><input id="pilot-consent" type="checkbox">I consent to local logging of my choices, confidence and timing in this fictional pilot. This session is linked to your signed-in account. I can stop at any time. This is a pilot, not a formally validated study.</label><p class="small">Condition assigned by the server, balanced across started sessions. Six advice trials, including intentionally incorrect advice, followed by three transfer trials. All calls and links are simulated.</p></div>
 <div id="pilot-active" class="panel" hidden></div><div id="pilot-report" hidden></div>
 </section>
-<footer>Verify-then-Warn <span>Research prototype · fictional bank fixtures · no real calls or payments</span></footer>
+<footer>Phishing Guard <span>Research prototype · fictional bank fixtures · no real calls or payments</span></footer>
 </main>
 </div><script src="lab.js"></script>
 </body></html>

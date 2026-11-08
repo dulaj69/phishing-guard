@@ -133,3 +133,42 @@ def preview(req:WarningPreview):
                               for condition in pilot.CONDITIONS],
                 'limitation':'Profiles are selected simulations, not measured participants. No decisions are logged.'}
     return guarded(run)
+
+# Experimental extensions: bounded context, exact evidence binding, contrast rehearsal.
+from research.lab import decision_boundary
+from warn import contrast
+
+class ContextTurn(BaseModel):
+    speaker: Literal['sender','recipient']='sender'
+    text: str = Field(min_length=1,max_length=2000)
+
+class Clarification(BaseModel):
+    request_id: str = Field(max_length=80)
+    object: Literal['credential','document','not_sure']
+
+class BoundaryRequest(BaseModel):
+    turns: list[ContextTurn] = Field(min_length=1,max_length=6)
+    evidence_mode: Literal['current','stale','missing']='current'
+    score: float = Field(.55,ge=0,le=1,allow_inf_nan=False)
+    clarification: Optional[Clarification]=None
+
+@router.get('/boundary/catalog')
+def boundary_catalog():
+    return {'fixtures':decision_boundary.FIXTURES}
+
+@router.post('/boundary/analyze')
+def boundary_analyze(req:BoundaryRequest):
+    return guarded(lambda:decision_boundary.run(**req.model_dump()))
+
+@router.post('/boundary/benchmark')
+def boundary_benchmark():
+    return decision_boundary.benchmark()
+
+class ContrastAnswer(BaseModel):
+    concept: Literal['object','destination','uncertainty']
+    phase: Literal['pair','transfer']
+    choice: int = Field(ge=0,le=2)
+
+@router.post('/boundary/answer')
+def boundary_answer(req:ContrastAnswer):
+    return contrast.answer(**req.model_dump())

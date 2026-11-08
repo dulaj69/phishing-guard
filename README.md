@@ -1,4 +1,11 @@
-# Verify-then-Warn (J26-IT-442)
+# Phishing Guard (J26-IT-442)
+
+## Component setup guides
+
+- [Component 1 — Sanmith: detection and action extraction](docs/Phishing-Guard-Component-1-README.txt)
+- [Component 2 — Sonal: XAI, evidence verification and risk](docs/Phishing-Guard-Component-2-README.txt)
+
+These plain-text guides include setup, API examples, tests, ownership and current-versus-planned capabilities.
 
 Final-year research project. One system, three parts:
 
@@ -181,3 +188,10 @@ Research experiments remain at `/app/lab/`; the former phone-style study interfa
 ### Visible individual contributions
 
 Every successful public SMS check now shows a fully expanded, three-member analysis report on the same page. Sanmith’s section shows classifier outputs, weighted score, normalization and action evidence; Perera’s shows all fact checks, occlusion contributions and the risk calculation; Rathnayake’s shows the actual generated warning, selected policy and sentence provenance. The top result links directly to each section. Full JSON can be exported locally and includes the submitted text. Anonymous checks do not create a participant profile or measure reliance.
+
+
+## Experimental requests, evidence and learning walkthrough
+
+After signing in, open `/app/lab/boundary.html` (also linked from the research workbench). This adds bounded cross-message object hypotheses, exact requested-destination evidence binding, and concept-targeted paired-example rehearsal. It uses a controlled score and fictional evidence; it does not replace the public detector. Restart an already running server to load the new API routes.
+
+See [the research claims and evaluation plan](docs/research_extensions.md) for individual ownership, related work, limitations and presentation wording. These extensions are candidate research mechanisms, not established novelty or validated performance. Run `python -m pytest tests/test_decision_boundary.py -q` to check them.

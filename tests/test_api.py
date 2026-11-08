@@ -19,7 +19,7 @@ def signed_in(temp_reliance_db):
 
 def test_health_and_app_page():
     assert client.get("/health").json() == {"status": "ok"}
-    assert "Verify-then-Warn" in client.get("/app/").text
+    assert "Phishing Guard" in client.get("/app/").text
 
 
 def test_detect_contract():
