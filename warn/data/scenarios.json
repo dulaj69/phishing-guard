@@ -1,0 +1,25 @@
+{
+  "_readme": "Messages shown in the study inbox. 'truth' is the real answer. 'planted_error': true makes the AI give the WRONG advice on purpose (to measure over- and under-reliance). Tell participants about planted errors in the debrief, after the study. Banks and numbers are fictional.",
+  "scenarios": [
+    {"id": "s01", "sender": "+94771234567", "truth": "scam", "planted_error": false,
+     "text": "Orion Bank: obage account eka passe 24 k athule block wenawa. Wahama 0771234567 ta call karanna."},
+    {"id": "s02", "sender": "ORIONBANK", "truth": "safe", "planted_error": false,
+     "text": "Orion Bank: Your OTP for payment of LKR 4,850.00 at ShopMart is 483920. Valid for 5 minutes. Do not share this code with anyone."},
+    {"id": "s03", "sender": "+94762223344", "truth": "scam", "planted_error": false,
+     "text": "Demo Bank Security: To cancel the pending transfer of LKR 95,000.00, reply with the OTP you just received."},
+    {"id": "s04", "sender": "DEMOBANK", "truth": "safe", "planted_error": false,
+     "text": "Demo Bank: LKR 12,500.00 debited from A/C xxxx4471 at Keells. Avail. Bal: LKR 38,210.55."},
+    {"id": "s05", "sender": "+94709998877", "truth": "scam", "planted_error": false,
+     "text": "Orion Bank: ඔබගේ ගිණුම පැය 24 ක් ඇතුළත අවහිර වේ. කරුණාකර වහාම 0709998877 අමතන්න."},
+    {"id": "s06", "sender": "DEMOBANK", "truth": "safe", "planted_error": true,
+     "text": "Demo Bank: Get 10% off at Cargills this weekend with your Demo Bank card. T&Cs apply. demobank[.]example/offers"},
+    {"id": "s07", "sender": "+94715556677", "truth": "scam", "planted_error": false,
+     "text": "0rion B@nk: Y0ur acc0unt is susp3nded due to incomplete KYC. V3rify n0w: hxxps://orion-verify[.]top"},
+    {"id": "s08", "sender": "ORIONBANK", "truth": "safe", "planted_error": false,
+     "text": "Orion Bank: Obage A/C xxxx4471 ekata Rs. 5,000.00 k credit una. Shesaya: Rs. 43,210.55."},
+    {"id": "s09", "sender": "+94754443322", "truth": "scam", "planted_error": true,
+     "text": "Orion Bank: Congratulations! You have won a LKR 50,000 cashback reward. To claim, call 0754443322 within 2 hours."},
+    {"id": "s10", "sender": "+94781112233", "truth": "scam", "planted_error": false,
+     "text": "Hello, this is the Demo Bank security team. We have limited your card after an unusual payment. To restore access, please reply with the verification code we just sent."}
+  ]
+}
